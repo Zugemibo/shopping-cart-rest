@@ -15,12 +15,12 @@ import java.util.List;
 public class Order implements java.io.Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="order_id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false, unique = true)
     private Customer customer;
 
     @Temporal(TemporalType.TIMESTAMP)

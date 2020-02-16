@@ -14,8 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class ShoppingCart implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "cart_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_id", nullable = false, unique = true)
     private Long cartId;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")

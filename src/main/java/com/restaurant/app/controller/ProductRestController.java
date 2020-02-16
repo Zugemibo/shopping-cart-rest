@@ -3,28 +3,66 @@ package com.restaurant.app.controller;
 import com.restaurant.app.model.Product;
 import com.restaurant.app.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api")
 public class ProductRestController {
 
     @Autowired
     private ProductServiceImpl productServiceImpl;
 
-    @GetMapping(value = {"", "/"})
-    public @NotNull List<Product> getProducts() {
-        return productServiceImpl.getAllProducts();
+    @GetMapping("/products")
+    public @ResponseBody
+    ResponseEntity<List<Product>> getProducts() {
+        List<Product> products = productServiceImpl.getAllProducts();
+        return new ResponseEntity<List<Product>>(products, HttpStatus.FOUND);
     }
 
-    /*@PostMapping("/addToCart")
-    public Product addToCart(Product product) {
-        product.setCartItem();
+    @GetMapping("/products/{id}")
+    public @ResponseBody
+    ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
+        Product product = productServiceImpl.getProductById(id);
+        return new ResponseEntity<Product>(product, HttpStatus.OK);
+    }
 
-        return null;
+    /*@GetMapping("/products/{name}")
+    public @ResponseBody ResponseEntity<Product> getProductByName(@PathVariable("name") String name){
+        Product product = productServiceImpl.getProductByName(name);
+        return new ResponseEntity<Product>(product, HttpStatus.FOUND);
     }*/
+
+    @PostMapping("/products")
+    public Product addProduct(@RequestBody Product product) {
+        return productServiceImpl.addProduct(product);
+    }
+
+    @PutMapping("/products/{id}")
+    public @ResponseBody
+    ResponseEntity<Product> updateProductById(@PathVariable("id") Long id, @RequestBody Product product) {
+        Product currentProduct = productServiceImpl.getProductById(id);
+
+        if (currentProduct == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        currentProduct.setName(product.getName());
+        currentProduct.setDescription(product.getDescription());
+        currentProduct.setPrice(product.getPrice());
+        currentProduct.setSize(product.getSize());
+        productServiceImpl.updateProduct(currentProduct);
+        return new ResponseEntity<>(currentProduct, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public @ResponseBody
+    ResponseEntity<Product> deleteProductById(@PathVariable("id") Long id) {
+        productServiceImpl.deleteProductById(id);
+        return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
+    }
+
 }

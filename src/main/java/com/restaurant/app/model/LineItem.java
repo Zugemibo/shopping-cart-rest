@@ -12,8 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class LineItem implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "line_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "line_id", nullable = false, unique = true)
     private Long id;
 
     @ManyToOne

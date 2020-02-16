@@ -15,8 +15,8 @@ import java.util.List;
 public class Customer implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "customer_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id", nullable = false, unique = true)
     private Long id;
     @Column(name = "first_name")
     private String firstName;
