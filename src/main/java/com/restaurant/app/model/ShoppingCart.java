@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -21,26 +20,27 @@ public class ShoppingCart implements Serializable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
     private double subTotal;
-    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<LineItem> lineItems = new HashSet<>();
 
-
-    public void addItem(LineItem lineItem) {
-        if (lineItems == null)
-            lineItems = new HashSet<>();
-        lineItems.add(lineItem);
+    public ShoppingCart addLine(LineItem line) {
+        lineItems.add(line);
+        line.setShoppingCart(this);
+        subTotal += line.getTotalPrice();
+        return this;
     }
 
-
-    public void removeItem(LineItem removeItem) {
-        if (lineItems == null)
-            lineItems.removeIf(lineItem -> Objects.equals(lineItem.getId(), removeItem.getId()));
+    public ShoppingCart removeLine(LineItem line) {
+        lineItems.remove(line);
+        line.setShoppingCart(null);
+        return this;
+    }
+    public ShoppingCart removeAllLines(){
+        lineItems.clear();
+        setSubTotal(0);
+        return this;
     }
 
-    public void updateItem(LineItem lineItem) {
-        removeItem(lineItem);
-        addItem(lineItem);
-    }
 }
 
 

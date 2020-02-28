@@ -33,4 +33,12 @@ public class ProductServiceImpl {
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
+
+    public List<Product> getProductByName(String name) {
+        return productRepository.getProductByName(name);
+    }
+
+    public List<Product> getProductBySize(int size) {
+        return productRepository.getProductBySize(size);
+    }
 }

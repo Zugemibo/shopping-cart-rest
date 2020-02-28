@@ -1,7 +1,9 @@
 package com.restaurant.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.io.Serializable;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = "shoppingCart")
 public class LineItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +35,5 @@ public class LineItem implements Serializable {
     private Order order;
 
     private Integer quantity;
-
-    @Transient
     private double totalPrice;
 }

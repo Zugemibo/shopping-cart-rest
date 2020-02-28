@@ -31,11 +31,16 @@ public class ProductRestController {
         return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
 
-    /*@GetMapping("/products/{name}")
-    public @ResponseBody ResponseEntity<Product> getProductByName(@PathVariable("name") String name){
-        Product product = productServiceImpl.getProductByName(name);
-        return new ResponseEntity<Product>(product, HttpStatus.FOUND);
-    }*/
+    @GetMapping("/products/name/{name}")
+    public @ResponseBody ResponseEntity<List<Product>> getProductByName(@PathVariable("name") String name){
+        List<Product> products = productServiceImpl.getProductByName(name);
+        return new ResponseEntity<List<Product>>(products, HttpStatus.FOUND);
+    }
+    @GetMapping("/products/size/{size}")
+    public @ResponseBody ResponseEntity<List<Product>> getProductBySize(@PathVariable("size") int size){
+        List<Product> products = productServiceImpl.getProductBySize(size);
+        return new ResponseEntity<List<Product>>(products, HttpStatus.FOUND);
+    }
 
     @PostMapping("/products")
     public Product addProduct(@RequestBody Product product) {
