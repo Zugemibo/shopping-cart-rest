@@ -9,9 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.restaurant</groupId>
-    <artifactId>app</artifactId>
+    <artifactId>shopping-cart-rest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
     <name>shopping-cart-rest</name>
     <description>Order delivery system for Restaurant.</description>
 
