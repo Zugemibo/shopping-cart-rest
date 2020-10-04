@@ -1,6 +1,6 @@
 # Shopping Cart
 
-Simple shopping cart implementation using Rest in Spring Boot.
+Simple shopping cart implementation using Rest in Spring Boot. Not completed yet.
 
 ## Technologies used
 - Spring Boot
